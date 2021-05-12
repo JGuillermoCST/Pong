@@ -23,8 +23,8 @@ class Ball {
 
     hasCollitionWithBoard() {
 
-        if (this.y-this.r <= 0) {this.speedY = 2}
-        if (this.y+this.r >= 500) {this.speedY = -2}
+        if (this.y-this.r <= 20) { this.speedY = 2 }
+        if (this.y+this.r >= 500) { this.speedY = -2 }
 
         if (this.x-this.r <= 0) {this.speedX = 2}
         if (this.x+this.r >= 500) {this.speedX = -2}
@@ -32,16 +32,23 @@ class Ball {
 
     hasCollitionWithPad(pad) {
 
-        if (this.x-this.r <= pad.x+pad.dx && 
-            this.y+this.r <= pad.y+pad.dy &&
-            this.y-this.r >= pad.y) { this.speedX = 2 }
+        //RIGHT SIDE
+        if (this.x-this.r <= pad.x+pad.dx && this.x-this.r >= pad.x && this.isPadYInsets(pad)) { 
+            this.speedX = 2 
+            return true
+        }
             
-        if (this.x+this.r >= pad.x && 
-            this.y+this.r <= pad.y+pad.dy &&
-            this.y-this.r >= pad.y) { this.speedX = -2 }
+        //LEFT SIDE
+        if (this.x+this.r >= pad.x && this.x+this.r <= pad.x+pad.dx && this.isPadYInsets(pad)) { 
+            this.speedX = -2 
+            return true
+        }
+    }
 
-        // if (this.y+this.r >= pad.y && 
-        //     this.x+this.r <= pad.x+pad.dx &&
-        //     this.x-this.r >= pad.x) { this.speedY = -2 }
+    isPadYInsets(pad) {
+        if ((this.y-this.r >= pad.y && this.y-this.r <= pad.y+pad.dy) ||
+            (this.y+this.r >= pad.y && this.y+this.r <= pad.y+pad.dy)) {
+            return true
+        }
     }
 }

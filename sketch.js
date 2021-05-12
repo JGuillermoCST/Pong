@@ -9,21 +9,26 @@ function setup() {
 }
 
 function draw() {
-    //background(113,0,113)
+    
     background(0,0,0)
-    ball.display()
+
     player.display()
     aiPlayer.display()
+    ball.display()
 
-    if (keyIsDown(UP_ARROW)) {
-        player.moveUP()
-    }
+    if (keyIsDown(UP_ARROW)) { player.moveUP() }
+    if (keyIsDown(DOWN_ARROW)) { player.moveDOWN() }
 
-    if (keyIsDown(DOWN_ARROW)) {
-        player.moveDOWN()
-    }
+    fill('white');
+    rect(0,0,500,20)
+
+    fill('black');
+    text('PONG',235,15);
+    text('POINTS: ' + player.points,420,15);
 
     aiPlayer.aiMove(ball)
-    ball.hasCollitionWithPad(player)
     ball.hasCollitionWithPad(aiPlayer)
+    if (ball.hasCollitionWithPad(player)) {
+        player.points += 13
+    }
 }
